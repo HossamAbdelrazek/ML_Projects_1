@@ -26,8 +26,7 @@ def normalize_hand_landmarks(landmarks):
         flattened_data[f'y{i+1}'] = landmarks[i, 1]
         flattened_data[f'z{i+1}'] = landmarks[i, 2]
     
-    # The error suggests we might need to exclude 'x1' but keep 'y1'
-    # Remove 'x1' from the dictionary
+    # Remove 'x1', 'x2' from the dictionary
     flattened_data.pop('x1', None)
     flattened_data.pop('x2', None)
 
