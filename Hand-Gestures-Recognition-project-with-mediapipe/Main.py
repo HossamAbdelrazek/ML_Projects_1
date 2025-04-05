@@ -22,7 +22,7 @@ def main():
 
     # Video Writer setup to record video
     fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec for video
-    out = cv2.VideoWriter('hand_gesture_output.avi', fourcc, 10, (640, 480))  # Save video to 'hand_gesture_output.avi'
+    out = cv2.VideoWriter('/media/hossam/01DB4F3124760DF0/Users/Hossam Abdelrazek/Desktop/ITI AI and ML/AI ITI Material/Machine Learning I Supervised/Supervised_ML_Project/Hand-Gestures-Recognition-project-with-mediapipe/Personal/video/hand_gesture_output.avi', fourcc, 10, (640, 480))  # Save video to 'hand_gesture_output.avi'
 
     # Initialize variables
     frame_buffer = []  # To store k frames (landmarks)
