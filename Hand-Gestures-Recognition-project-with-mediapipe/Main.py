@@ -28,8 +28,9 @@ def main():
     frame_buffer = []  # To store k frames (landmarks)
     current_prediction = None
     current_confidence = 0.0
+    cv2.namedWindow("Hand Gesture Recognition", cv2.WINDOW_NORMAL)
+    cv2.resizeWindow("Hand Gesture Recognition", 1280, 720)
 
-    
     with mp_hands.Hands(
         static_image_mode=False,
         max_num_hands=1,
@@ -73,7 +74,6 @@ def main():
                 if len(frame_buffer) == K:
                     current_prediction, current_confidence = predict_gesture(model, frame_buffer, encoder)
                     # Display the prediction and confidence
-                    print(f"frame per second {fps}")
                     text = f"Gesture: {current_prediction} ({current_confidence*100:.1f}%)"
                     cv2.putText(frame, text, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
                     frame_buffer.pop(0)
@@ -83,7 +83,11 @@ def main():
                     cv2.putText(frame, text, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
             # Show frame
-            cv2.imshow("Hand Gesture Recognition", frame)
+            h, w = frame.shape[0:2]
+            c = h/w
+            wid = 1920*c
+            frame2 = cv2.resize(frame, (1920, int(wid)))
+            cv2.imshow("Hand Gesture Recognition", frame2)
 
             # Save frame to video
             out.write(frame)
