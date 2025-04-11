@@ -7,29 +7,28 @@ import os
 os.environ['QT_QPA_PLATFORM'] = 'xcb'
 
 # Load model
-model = joblib.load("/media/hossam/01DB4F3124760DF0/Users/Hossam Abdelrazek/Desktop/ITI AI and ML/AI ITI Material/Machine Learning I Supervised/Supervised_ML_Project/Hand-Gestures-Recognition-project-with-mediapipe/MLPack/model.joblib")
-encoder = joblib.load("Hand-Gestures-Recognition-project-with-mediapipe/MLPack/encoder.joblib")# Constants
+model = joblib.load("MLPack/model.joblib")
+encoder = joblib.load("MLPack/encoder.joblib")
 
 # Initialize MediaPipe Hand Detection
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
 def main():
-    # Constants
-    K = 5  # Number of frames to accumulate for prediction
-    fps = cv2.CAP_PROP_FPS
+    K = 10  # Number of frames to accumulate for prediction, to stabilize predictions
     cap = cv2.VideoCapture(0)
 
     # Video Writer setup to record video
     fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec for video
-    out = cv2.VideoWriter('/media/hossam/01DB4F3124760DF0/Users/Hossam Abdelrazek/Desktop/ITI AI and ML/AI ITI Material/Machine Learning I Supervised/Supervised_ML_Project/Hand-Gestures-Recognition-project-with-mediapipe/Personal/video/hand_gesture_output.avi', fourcc, 10, (640, 480))  # Save video to 'hand_gesture_output.avi'
+    # Save video to 'hand_gesture_output.avi'
+    out = cv2.VideoWriter('/media/hossam/01DB4F3124760DF0/Users/Hossam Abdelrazek/Desktop/ITI AI and ML/AI ITI Material/Machine Learning I Supervised/Supervised_ML_Project/Hand-Gestures-Recognition-project-with-mediapipe/Personal/video/hand_gesture_output.avi', fourcc, 10, (640, 480)) 
 
     # Initialize variables
     frame_buffer = []  # To store k frames (landmarks)
     current_prediction = None
     current_confidence = 0.0
-    cv2.namedWindow("Hand Gesture Recognition", cv2.WINDOW_NORMAL)
-    cv2.resizeWindow("Hand Gesture Recognition", 1280, 720)
+    cv2.namedWindow("Hand_gestures_Application", cv2.WINDOW_NORMAL)
+    cv2.resizeWindow("Hand_gestures_Application", 1280, 720)
 
     with mp_hands.Hands(
         static_image_mode=False,
@@ -70,7 +69,7 @@ def main():
                 # Append the current frame's landmarks to the buffer
                 frame_buffer.append(landmarks)
 
-                # If we have enough frames, process them for prediction
+                # If we have enough frames, process them for prediction then remove last frame progressively
                 if len(frame_buffer) == K:
                     current_prediction, current_confidence = predict_gesture(model, frame_buffer, encoder)
                     # Display the prediction and confidence
@@ -82,12 +81,13 @@ def main():
                     text = " "
                     cv2.putText(frame, text, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
-            # Show frame
+            # The code below is used for displaying the frames in an aspect ratio that is natural for the camera
+            # and resizing the frame as user wants
             h, w = frame.shape[0:2]
             c = h/w
             wid = 1920*c
-            frame2 = cv2.resize(frame, (1920, int(wid)))
-            cv2.imshow("Hand Gesture Recognition", frame2)
+            frame_resized = cv2.resize(frame, (1920, int(wid)))
+            cv2.imshow("Hand_gestures_Application", frame_resized)
 
             # Save frame to video
             out.write(frame)
