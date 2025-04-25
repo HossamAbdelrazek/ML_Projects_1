@@ -34,7 +34,7 @@ The goal was to build an accurate, responsive system capable of detecting and cl
 Final Model: An ensemble Voting Classifier combining the best models achieved 98.36% accuracy.
 
 Hand-Gestures-Recognition-project-with-mediapipe/
-│
+├── Hand_gestures_detection_with_Machine_Learning_and_Mediapipe.ipynb       # Development Notebook
 ├── hand_landmarks_data.csv                     
 ├── models/                                  
 ├── MLPack/
@@ -43,4 +43,49 @@ Hand-Gestures-Recognition-project-with-mediapipe/
 │   └── encoder.joblib 
 ├── README.md                  
 ├── requirements.txt           
-└── Main.py                    
+├── Main.py
+├── Personal/video/hand_gesture_output.mp4                    
+
+## Key Learnings
+
+- Effective integration of MediaPipe with machine learning pipelines.
+
+- Importance of model evaluation across multiple metrics (Accuracy, F1-Score, Precision, Recall).
+
+- Boosted ensemble methods (Voting Classifier) to enhance model performance.
+
+- Handling real-time video streams and performing low-latency inference.
+
+## How to Run the Project
+
+1. Clone the Repository
+    bash'''
+        Copy
+        Edit
+        git clone https://github.com/yourusername/hand-gesture-recognition.git
+        cd hand-gesture-recognition
+    '''
+
+2. Install Dependencies
+    bash'''
+        pip install -r requirements.txt
+    '''
+
+3. Run the Project
+    bash'''
+        python Main.py
+    '''
+
+4. View the Results
+    Open the generated video file in your preferred video player.
+    You will find it in the 'Personal/video/' folder that would be created after running the Main.py file.
+
+## Example Output video
+
+<video controls src="hand_gesture_output.mp4" title="Title"></video>
+
+## Future Improvements
+
+- Enhance model accuracy by Data Augmentation on various angles.
+
+
