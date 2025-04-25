@@ -81,8 +81,7 @@ Hand-Gestures-Recognition-project-with-mediapipe/
     You will find it in the 'Personal/video/' folder that would be created after running the Main.py file.
 
 ## Example Output video
-
-<video controls src="hand_gesture_output.mp4" title="Title"></video>
+![Demo Video](hand_gesture_output-1.gif)
 
 ## Future Improvements
 
