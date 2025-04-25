@@ -15,7 +15,7 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
 def main():
-    K = 10  # Number of frames to accumulate for prediction, to stabilize predictions
+    K = 3  # Number of frames to accumulate for prediction, to stabilize predictions
     cap = cv2.VideoCapture(0)
 
     # Video Writer setup to record video
@@ -73,7 +73,7 @@ def main():
                 if len(frame_buffer) == K:
                     current_prediction, current_confidence = predict_gesture(model, frame_buffer, encoder)
                     # Display the prediction and confidence
-                    text = f"Gesture: {current_prediction} ({current_confidence*100:.1f}%)"
+                    text = f"{current_prediction} | Conf.:({current_confidence*100:.1f}%)"
                     cv2.putText(frame, text, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
                     frame_buffer.pop(0)
                 
